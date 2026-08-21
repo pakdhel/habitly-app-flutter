@@ -7,8 +7,10 @@ class HabitlyTheme {
     return ThemeData(
       colorSchemeSeed: HabitlyColors.green.color,
       brightness: Brightness.light,
+      scaffoldBackgroundColor: HabitlyColors.cream.color,
       useMaterial3: true,
-      textTheme: _textTheme
+      textTheme: _textTheme,
+      elevatedButtonTheme: _elevatedButtonTheme,
     );
   }
 
@@ -17,7 +19,8 @@ class HabitlyTheme {
       colorSchemeSeed: HabitlyColors.green.color,
       brightness: Brightness.dark,
       useMaterial3: true,
-      textTheme: _textTheme
+      textTheme: _textTheme,
+      elevatedButtonTheme: _elevatedButtonTheme,
     );
   }
 
@@ -38,6 +41,16 @@ class HabitlyTheme {
       labelLarge: HabitlyTextstyles.labelLarge,
       labelMedium: HabitlyTextstyles.labelMedium,
       labelSmall: HabitlyTextstyles.labelSmall,
+    );
+  }
+
+  static ElevatedButtonThemeData get _elevatedButtonTheme {
+    return ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: HabitlyColors.green.color,
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+      ),
     );
   }
 }
