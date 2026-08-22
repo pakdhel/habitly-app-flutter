@@ -9,13 +9,14 @@ class HabitlyTheme {
         primary: HabitlyColors.primary.color,
         onPrimary: HabitlyColors.onPrimary.color,
         primaryContainer: HabitlyColors.primaryContainer.color,
-        onPrimaryContainer: HabitlyColors.onPrimaryContainer.color,        
+        onPrimaryContainer: HabitlyColors.onPrimaryContainer.color,
         onSecondary: HabitlyColors.onPrimary.color,
         surface: HabitlyColors.surface.color,
         onSurface: HabitlyColors.textPrimary.color,
         outline: HabitlyColors.border.color,
         error: HabitlyColors.destructive.color,
         onError: HabitlyColors.onDestructive.color,
+        tertiary: HabitlyColors.textSecondary.color,
       ),
       brightness: Brightness.light,
       scaffoldBackgroundColor: HabitlyColors.background.color,
@@ -39,7 +40,6 @@ class HabitlyTheme {
       labelSmall: HabitlyTextstyles.labelSmall,
     );
   }
-  
 
   static ElevatedButtonThemeData get _elevatedButtonTheme {
     return ElevatedButtonThemeData(
