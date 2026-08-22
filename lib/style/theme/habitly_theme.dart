@@ -5,51 +5,47 @@ import 'package:habitly/style/typography/habitly_textstyles.dart';
 class HabitlyTheme {
   static ThemeData get lightTheme {
     return ThemeData(
-      colorSchemeSeed: HabitlyColors.green.color,
+      colorScheme: ColorScheme.light(
+        primary: HabitlyColors.primary.color,
+        onPrimary: HabitlyColors.onPrimary.color,
+        primaryContainer: HabitlyColors.primaryContainer.color,
+        onPrimaryContainer: HabitlyColors.onPrimaryContainer.color,        
+        onSecondary: HabitlyColors.onPrimary.color,
+        surface: HabitlyColors.surface.color,
+        onSurface: HabitlyColors.textPrimary.color,
+        outline: HabitlyColors.border.color,
+        error: HabitlyColors.destructive.color,
+        onError: HabitlyColors.onDestructive.color,
+      ),
       brightness: Brightness.light,
-      scaffoldBackgroundColor: HabitlyColors.cream.color,
+      scaffoldBackgroundColor: HabitlyColors.background.color,
       useMaterial3: true,
       textTheme: _textTheme,
       elevatedButtonTheme: _elevatedButtonTheme,
       inputDecorationTheme: _inputDecorationTheme,
-    );
-  }
-
-  static ThemeData get darkTheme {
-    return ThemeData(
-      colorSchemeSeed: HabitlyColors.green.color,
-      brightness: Brightness.dark,
-      useMaterial3: true,
-      textTheme: _textTheme,
-      elevatedButtonTheme: _elevatedButtonTheme,
+      cardTheme: _cardTheme,
     );
   }
 
   static TextTheme get _textTheme {
     return TextTheme(
-      displayLarge: HabitlyTextstyles.displayLarge,
-      displayMedium: HabitlyTextstyles.displayMedium,
-      displaySmall: HabitlyTextstyles.displaySmall,
       headlineLarge: HabitlyTextstyles.headlineLarge,
-      headlineMedium: HabitlyTextstyles.headlineMedium,
-      headlineSmall: HabitlyTextstyles.headlineSmall,
       titleLarge: HabitlyTextstyles.titleLarge,
       titleMedium: HabitlyTextstyles.titleMedium,
-      titleSmall: HabitlyTextstyles.titleSmall,
       bodyLarge: HabitlyTextstyles.bodyLargeBold,
       bodyMedium: HabitlyTextstyles.bodyLargeMedium,
       bodySmall: HabitlyTextstyles.bodyLargeRegular,
       labelLarge: HabitlyTextstyles.labelLarge,
-      labelMedium: HabitlyTextstyles.labelMedium,
       labelSmall: HabitlyTextstyles.labelSmall,
     );
   }
+  
 
   static ElevatedButtonThemeData get _elevatedButtonTheme {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(vertical: 16),
-        backgroundColor: HabitlyColors.green.color,
+        backgroundColor: HabitlyColors.primary.color,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
       ),
@@ -72,7 +68,7 @@ class HabitlyTheme {
 
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(100),
-        borderSide: BorderSide(color: HabitlyColors.green.color, width: 1.5),
+        borderSide: BorderSide(color: HabitlyColors.outline.color, width: 1.5),
       ),
 
       errorBorder: OutlineInputBorder(
@@ -80,5 +76,9 @@ class HabitlyTheme {
         borderSide: const BorderSide(color: Colors.redAccent),
       ),
     );
+  }
+
+  static CardThemeData get _cardTheme {
+    return CardThemeData(color: HabitlyColors.primary.color);
   }
 }
