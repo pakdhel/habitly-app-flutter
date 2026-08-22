@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HabitlyTextstyles {
-  static const TextStyle _commonStyle = TextStyle(fontFamily: 'Poppins');
+  static TextStyle _commonStyle = GoogleFonts.plusJakartaSans();
 
   /// displayLarge Text Style
   static TextStyle displayLarge = _commonStyle.copyWith(

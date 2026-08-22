@@ -11,6 +11,7 @@ class HabitlyTheme {
       useMaterial3: true,
       textTheme: _textTheme,
       elevatedButtonTheme: _elevatedButtonTheme,
+      inputDecorationTheme: _inputDecorationTheme,
     );
   }
 
@@ -47,9 +48,36 @@ class HabitlyTheme {
   static ElevatedButtonThemeData get _elevatedButtonTheme {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 16),
         backgroundColor: HabitlyColors.green.color,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+      ),
+    );
+  }
+
+  static InputDecorationTheme get _inputDecorationTheme {
+    return InputDecorationTheme(
+      contentPadding: EdgeInsets.symmetric(vertical: 14),
+      hintStyle: HabitlyTextstyles.labelLarge.copyWith(color: Colors.black38),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(100),
+        borderSide: BorderSide(color: Colors.black12),
+      ),
+
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(100),
+        borderSide: BorderSide(color: Colors.black12),
+      ),
+
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(100),
+        borderSide: BorderSide(color: HabitlyColors.green.color, width: 1.5),
+      ),
+
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(100),
+        borderSide: const BorderSide(color: Colors.redAccent),
       ),
     );
   }

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:habitly/static/navigation_route.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -18,16 +22,14 @@ class OnboardingScreen extends StatelessWidget {
                     width: 10,
                     height: 10,
                     decoration: BoxDecoration(
-                      color: Colors.green,
+                      color: colorScheme.primary,
                       shape: BoxShape.circle,
                     ),
                   ),
                   const SizedBox(width: 10),
                   Text(
                     'HABITLY',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge?.copyWith(letterSpacing: 2),
+                    style: textTheme.bodyLarge?.copyWith(letterSpacing: 3),
                   ),
                 ],
               ),
@@ -35,7 +37,6 @@ class OnboardingScreen extends StatelessWidget {
               Expanded(
                 child: Image.asset(
                   'assets/onboarding.png',
-
                   fit: BoxFit.contain,
                 ),
               ),
@@ -51,7 +52,7 @@ class OnboardingScreen extends StatelessWidget {
 
               Text(
                 'Track habits without the pressure. Habitly celebrates progress, not perfection.',
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: textTheme.bodyMedium,
               ),
 
               SizedBox(height: 24),
@@ -60,10 +61,15 @@ class OnboardingScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      NavigationRoute.loginRoute.name,
+                    );
+                  },
                   child: Text(
                     'Get Started',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    style: textTheme.titleMedium?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
