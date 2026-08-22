@@ -16,7 +16,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: HabitlyTheme.lightTheme,
-      darkTheme: HabitlyTheme.darkTheme,
+      // darkTheme: HabitlyTheme.darkTheme,
       initialRoute: NavigationRoute.onBoarding.name,
       routes: {
         NavigationRoute.onBoarding.name: (ctx) => OnboardingScreen(),
