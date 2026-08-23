@@ -114,7 +114,9 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: colorScheme.primary,
         foregroundColor: colorScheme.onPrimary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, "/new");
+        },
 
         child: Icon(Icons.add),
       ),
