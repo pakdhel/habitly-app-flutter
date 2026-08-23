@@ -30,14 +30,21 @@ class HabitlyTheme {
 
   static TextTheme get _textTheme {
     return TextTheme(
+      displayLarge: HabitlyTextstyles.displayLarge,
+      displayMedium: HabitlyTextstyles.displayMedium,
+      displaySmall: HabitlyTextstyles.displaySmall,
       headlineLarge: HabitlyTextstyles.headlineLarge,
+      headlineMedium: HabitlyTextstyles.headlineMedium,
+      headlineSmall: HabitlyTextstyles.headlineSmall,
       titleLarge: HabitlyTextstyles.titleLarge,
       titleMedium: HabitlyTextstyles.titleMedium,
+      titleSmall: HabitlyTextstyles.titleSmall,
       bodyLarge: HabitlyTextstyles.bodyLargeBold,
       bodyMedium: HabitlyTextstyles.bodyLargeMedium,
       bodySmall: HabitlyTextstyles.bodyLargeRegular,
       labelLarge: HabitlyTextstyles.labelLarge,
       labelSmall: HabitlyTextstyles.labelSmall,
+      labelMedium: HabitlyTextstyles.labelMedium,
     );
   }
 
