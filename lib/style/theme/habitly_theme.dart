@@ -25,7 +25,8 @@ class HabitlyTheme {
       elevatedButtonTheme: _elevatedButtonTheme,
       inputDecorationTheme: _inputDecorationTheme,
       cardTheme: _cardTheme,
-      dividerTheme: _dividerTheme
+      dividerTheme: _dividerTheme,
+      navigationBarTheme: _navigationBarThemeData,
     );
   }
 
@@ -92,5 +93,32 @@ class HabitlyTheme {
 
   static DividerThemeData get _dividerTheme {
     return DividerThemeData(color: HabitlyColors.border.color);
+  }
+
+  static NavigationBarThemeData get _navigationBarThemeData {
+    return NavigationBarThemeData(
+      backgroundColor: HabitlyColors.surface.color,
+      indicatorColor: HabitlyColors.primaryContainer.color,
+      iconTheme: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return IconThemeData(color: HabitlyColors.onPrimaryContainer.color);
+        }
+
+        return IconThemeData(color: HabitlyColors.textSecondary.color);
+      }),
+
+      labelTextStyle: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return HabitlyTextstyles.labelMedium.copyWith(
+            color: HabitlyColors.textPrimary.color,
+            fontWeight: FontWeight.bold,
+          );
+        }
+
+        return HabitlyTextstyles.labelMedium.copyWith(
+          color: HabitlyColors.textSecondary.color,
+        );
+      }),
+    );
   }
 }
