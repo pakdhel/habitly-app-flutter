@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:habitly/screen/new_habit/frequency_widget.dart';
 import 'package:habitly/screen/new_habit/icon_select.dart';
+import 'package:habitly/screen/new_habit/reminder_time_widget.dart';
 
 class NewHabitScreen extends StatefulWidget {
   const NewHabitScreen({super.key});
@@ -78,6 +79,18 @@ class _NewHabitScreenState extends State<NewHabitScreen> {
                 print(selectedFrequency);
               },
             ),
+
+            SizedBox(height: 24),
+            Text(
+              'Reminder time',
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.tertiary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            SizedBox(height: 6),
+            ReminderTimeWidget(),
           ],
         ),
       ),
