@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habitly/screen/new_habit/color_tag_widget.dart';
 import 'package:habitly/screen/new_habit/frequency_widget.dart';
 import 'package:habitly/screen/new_habit/icon_select.dart';
 import 'package:habitly/screen/new_habit/reminder_time_widget.dart';
@@ -13,6 +14,7 @@ class NewHabitScreen extends StatefulWidget {
 class _NewHabitScreenState extends State<NewHabitScreen> {
   IconData? selectedIcon;
   String selectedFrequency = 'Daily';
+  Color? colorTag;
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +93,40 @@ class _NewHabitScreenState extends State<NewHabitScreen> {
 
             SizedBox(height: 6),
             ReminderTimeWidget(),
+
+            SizedBox(height: 24),
+            Text(
+              'Color tag',
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.tertiary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            SizedBox(height: 6),
+            ColorTagWidget(
+              onSelectedColor: (value) {
+                setState(() {
+                  colorTag = value;
+                });
+              },
+            ),
+
+            SizedBox(height: 36),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text(
+                  'Save habit',
+                  style: textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.surface,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

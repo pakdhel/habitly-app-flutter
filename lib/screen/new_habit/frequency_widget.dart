@@ -14,8 +14,8 @@ class _FrequencyWidgetState extends State<FrequencyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
+      final colorScheme = Theme.of(context).colorScheme;
+      final textTheme = Theme.of(context).textTheme;
 
     return Container(
       padding: EdgeInsets.all(6),
