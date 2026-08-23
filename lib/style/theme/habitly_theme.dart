@@ -25,6 +25,7 @@ class HabitlyTheme {
       elevatedButtonTheme: _elevatedButtonTheme,
       inputDecorationTheme: _inputDecorationTheme,
       cardTheme: _cardTheme,
+      dividerTheme: _dividerTheme
     );
   }
 
@@ -87,5 +88,9 @@ class HabitlyTheme {
 
   static CardThemeData get _cardTheme {
     return CardThemeData(color: HabitlyColors.primary.color);
+  }
+
+  static DividerThemeData get _dividerTheme {
+    return DividerThemeData(color: HabitlyColors.border.color);
   }
 }
