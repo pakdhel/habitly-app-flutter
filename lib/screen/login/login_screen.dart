@@ -1,8 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:habitly/data/api/auth_services.dart';
 import 'package:habitly/static/navigation_route.dart';
+import 'package:habitly/style/colors/habitly_colors.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  AuthServices authServices = AuthServices();
+  bool isLoading = false;
+
+  void _handleLogin() async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Email atau Password tidak boleh kosong'),
+          backgroundColor: HabitlyColors.destructive.color,
+        ),
+      );
+    } else {
+      setState(() {
+        isLoading = true;
+      });
+
+      try {
+        await authServices.login(
+          username: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        );
+
+        if (!mounted) return;
+        Navigator.pushNamed(context, NavigationRoute.mainRoute.name);
+        setState(() {
+          isLoading = false;
+        });
+      } catch (e) {
+        if (!mounted) return;
+
+        setState(() {
+          isLoading = false;
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Terjadi error'),
+            backgroundColor: HabitlyColors.destructive.color,
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +99,8 @@ class LoginScreen extends StatelessWidget {
               Text('Email', style: textTheme.labelLarge),
               SizedBox(height: 4),
               TextFormField(
+                controller: emailController,
                 decoration: InputDecoration(
-                  // label: Text('Email'),
                   hintText: 'you@example.com',
                   prefixIcon: Icon(
                     Icons.email_outlined,
@@ -61,6 +115,8 @@ class LoginScreen extends StatelessWidget {
               Text('Password', style: textTheme.labelLarge),
               SizedBox(height: 4),
               TextFormField(
+                controller: passwordController,
+                obscureText: true,
                 decoration: InputDecoration(
                   hintStyle: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -92,20 +148,25 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
+                height: 57,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      NavigationRoute.mainRoute.name,
-                    );
-                  },
-                  child: Text(
-                    'Sign in',
-                    style: textTheme.titleMedium?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  onPressed: _handleLogin,
+                  child: isLoading
+                      ? SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            color: colorScheme.surface,
+                            strokeWidth: 3,
+                          ),
+                        )
+                      : Text(
+                          'Sign in',
+                          style: textTheme.titleMedium?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
               ),
 
