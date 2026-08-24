@@ -2,7 +2,7 @@
 
 Habitly adalah aplikasi mobile habit & goal tracker yang dibangun menggunakan Flutter. Project ini dibuat sebagai media belajar sekaligus portofolio, dengan fokus pada penerapan praktik pengembangan Flutter modern — mulai dari design system, state management, autentikasi manual, testing, hingga CI/CD.
 
-> 🚧 **Status:** Masih dalam tahap pengembangan aktif. Beberapa fitur di bawah masih dalam progres.
+> 🚧 **Status:** Seluruh halaman UI dan komponen interaktif sudah selesai & stabil (termasuk perbaikan state management lokal per-widget). Saat ini masuk tahap implementasi autentikasi manual (JWT), state management global (Riverpod), dan integrasi API.
 
 ## ✨ Tentang Project
 
@@ -47,9 +47,13 @@ lib/style/
 
 <!-- Ganti path di bawah dengan lokasi screenshot kamu, misal di folder docs/screenshots/ -->
 
-| Onboarding | Login | Stats |
+| Onboarding | Login | Home |
 |---|---|---|
-| ![Onboarding](docs/screenshots/onboarding.png) | ![Login](docs/screenshots/login.png) | ![Stats](docs/screenshots/stats.png) |
+| ![Onboarding](docs/screenshots/onboarding.png) | ![Login](docs/screenshots/login.png) | ![Home](docs/screenshots/home.png) |
+
+| Stats | New Habit | Profile |
+|---|---|---|
+| ![Stats](docs/screenshots/stats.png) | ![New Habit](docs/screenshots/new_habit.png) | ![Profile](docs/screenshots/profile.png) |
 
 ## 📂 Struktur Project
 
@@ -68,12 +72,18 @@ lib/
 
 ## 🚀 Roadmap
 
-- [x] Setup design system (colors, typography, theme)
+**UI / Design System**
+- [x] Setup design system (colors, typography, theme — sinkron dari Figma)
 - [x] Halaman Onboarding
-- [x] Halaman Login & Register (UI)
+- [x] Halaman Login & Register
 - [x] Bottom navigation (Home, Stats, Profile)
-- [x] Halaman Stats (UI)
-- [x] Komponen New Habit — icon selector (UI)
+- [x] Halaman Home
+- [x] Halaman Stats
+- [x] Halaman Profile
+- [x] Halaman New Habit (icon selector, frequency toggle, reminder time picker, color tag picker)
+- [x] Perbaikan konsistensi warna & state lokal antar komponen
+
+**Logic & Arsitektur**
 - [ ] Autentikasi manual dengan JWT (access + refresh token)
 - [ ] Integrasi Riverpod untuk state management
 - [ ] Integrasi REST API untuk data habit
