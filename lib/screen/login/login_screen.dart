@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:habitly/data/api/auth_services.dart';
+import 'package:habitly/data/api/dio_client.dart';
+import 'package:habitly/data/storage/token_storage.dart';
 import 'package:habitly/static/navigation_route.dart';
 import 'package:habitly/style/colors/habitly_colors.dart';
 
@@ -11,10 +13,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TokenStorage tokenStorage = TokenStorage();
+  late final DioClient dioClient = DioClient(tokenStorage: tokenStorage);
+  late final AuthServices authServices = AuthServices(
+    dio: dioClient.dio,
+    tokenStorage: tokenStorage,
+  );
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  AuthServices authServices = AuthServices();
   bool isLoading = false;
 
   void _handleLogin() async {
