@@ -37,10 +37,12 @@ class _LoginScreenState extends State<LoginScreen> {
         );
 
         if (!mounted) return;
-        Navigator.pushNamed(context, NavigationRoute.mainRoute.name);
-        setState(() {
-          isLoading = false;
-        });
+
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          NavigationRoute.mainRoute.name,
+          (route) => false,
+        );
       } catch (e) {
         if (!mounted) return;
 
@@ -140,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   textAlign: TextAlign.right,
                   style: textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: colorScheme.secondary,
+                    color: colorScheme.onPrimaryContainer,
                   ),
                 ),
               ),
