@@ -9,7 +9,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool isTrue = false;
+  bool isNotificationOn = false;
+  bool isDarkMode = false;
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -108,10 +110,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                         trailing: Switch(
-                          value: isTrue,
+                          value: isNotificationOn,
                           onChanged: (bool? value) {
                             setState(() {
-                              isTrue = value!;
+                              isNotificationOn = value!;
                             });
                           },
                         ),
@@ -137,10 +139,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                         trailing: Switch(
-                          value: isTrue,
+                          value: isDarkMode,
                           onChanged: (bool? value) {
                             setState(() {
-                              isTrue = value!;
+                              isDarkMode = value!;
                             });
                           },
                         ),
