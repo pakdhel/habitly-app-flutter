@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: colorScheme.secondary,
+                    color: colorScheme.primaryContainer,
                   ),
                   child: Text(
                     'MH',
