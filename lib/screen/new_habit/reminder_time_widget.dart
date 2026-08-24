@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ReminderTimeWidget extends StatefulWidget {
-  const ReminderTimeWidget({super.key});
+  final ValueChanged<TimeOfDay> onTimeSelected;
+  const ReminderTimeWidget({super.key, required this.onTimeSelected});
 
   @override
   State<ReminderTimeWidget> createState() => _ReminderTimeWidgetState();
@@ -21,6 +22,8 @@ class _ReminderTimeWidgetState extends State<ReminderTimeWidget> {
       setState(() {
         timeOfDay = newTime;
       });
+
+      widget.onTimeSelected(newTime);
     }
   }
 

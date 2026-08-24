@@ -15,6 +15,7 @@ class _NewHabitScreenState extends State<NewHabitScreen> {
   IconData? selectedIcon;
   String selectedFrequency = 'Daily';
   Color? colorTag;
+  TimeOfDay? reminderTime;
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +121,13 @@ class _NewHabitScreenState extends State<NewHabitScreen> {
                     ),
 
                     SizedBox(height: 6),
-                    ReminderTimeWidget(),
+                    ReminderTimeWidget(
+                      onTimeSelected: (time) {
+                        setState(() {
+                          reminderTime = time;
+                        });
+                      },
+                    ),
 
                     SizedBox(height: 24),
                     Text(
