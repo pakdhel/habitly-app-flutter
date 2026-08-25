@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:habitly/data/api/auth_services.dart';
-import 'package:habitly/data/api/dio_client.dart';
-import 'package:habitly/data/storage/token_storage.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:habitly/data/providers/providers.dart';
+import 'package:habitly/data/providers/user_provider.dart';
 import 'package:habitly/static/navigation_route.dart';
 import 'package:habitly/style/colors/habitly_colors.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final TokenStorage tokenStorage = TokenStorage();
-  late final DioClient dioClient = DioClient(tokenStorage: tokenStorage);
-  late final AuthServices authServices = AuthServices(
-    dio: dioClient.dio,
-    tokenStorage: tokenStorage,
-  );
-
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -38,11 +31,15 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = true;
       });
 
+      final authServices = ref.read(authServicesProvider);
+
       try {
-        await authServices.login(
+        final user = await authServices.login(
           username: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
+
+        ref.read(userProvider.notifier).setUser(user);
 
         if (!mounted) return;
 

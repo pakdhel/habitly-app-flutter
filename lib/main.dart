@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:habitly/screen/login/login_screen.dart';
 import 'package:habitly/screen/main/main_screen.dart';
 import 'package:habitly/screen/new_habit/new_habit_screen.dart';
@@ -8,7 +9,7 @@ import 'package:habitly/static/navigation_route.dart';
 import 'package:habitly/style/theme/habitly_theme.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(ProviderScope(child: const MainApp()));
 }
 
 class MainApp extends StatelessWidget {

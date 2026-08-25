@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:habitly/data/models/user.dart';
 import 'package:habitly/data/storage/token_storage.dart';
 
 class AuthServices {
@@ -6,7 +7,7 @@ class AuthServices {
   final TokenStorage tokenStorage;
   AuthServices({required this.dio, required this.tokenStorage});
 
-  Future<void> login({
+  Future<User> login({
     required String username,
     required String password,
   }) async {
@@ -15,14 +16,24 @@ class AuthServices {
       data: {'username': username, 'password': password},
     );
 
-    tokenStorage.saveToken(
+    await tokenStorage.saveToken(
       accessToken: response.data['accessToken'],
       refreshToken: response.data['refreshToken'],
     );
+
+    try {
+      return User.fromJson(response.data);
+    } catch (e) {
+      throw Exception('Failed to login');
+    }
   }
 
-  Future<void> getMe() async {
+  Future<User> getMe() async {
     final response = await dio.get('/auth/me');
-    print(response.data);
+    try {
+      return User.fromJson(response.data);
+    } catch (e) {
+      throw Exception('Failed to load user');
+    }    
   }
 }

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:habitly/data/storage/token_storage.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:habitly/data/providers/providers.dart';
+import 'package:habitly/data/providers/user_provider.dart';
 import 'package:habitly/static/navigation_route.dart';
 import 'package:habitly/style/colors/habitly_colors.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   bool isNotificationOn = false;
   bool isDarkMode = false;
 
   bool isLoading = false;
-
-  final TokenStorage tokenStorage = TokenStorage();
 
   void _handleLogout() async {
     try {
@@ -24,7 +24,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         isLoading = true;
       });
 
+      final tokenStorage = ref.read(tokenStorageProvider);
+
       await tokenStorage.deleteAllToken();
+
+      ref.read(userProvider.notifier).clearUser();
 
       if (!mounted) return;
       Navigator.pushNamedAndRemoveUntil(
@@ -47,6 +51,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+
+    final user = ref.watch(userProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -87,14 +93,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Maya Rahman',
+                            user?.firstName ?? 'Guest',
                             style: textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
 
                           Text(
-                            'maya@habitly.app',
+                            user?.email ?? '-',
                             style: textTheme.titleSmall?.copyWith(
                               color: colorScheme.tertiary,
                             ),
