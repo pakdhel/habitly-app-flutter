@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:habitly/data/storage/token_storage.dart';
+import 'package:habitly/static/navigation_route.dart';
 import 'package:habitly/style/colors/habitly_colors.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -11,6 +13,35 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isNotificationOn = false;
   bool isDarkMode = false;
+
+  bool isLoading = false;
+
+  final TokenStorage tokenStorage = TokenStorage();
+
+  void _handleLogout() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+
+      await tokenStorage.deleteAllToken();
+
+      if (!mounted) return;
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        NavigationRoute.loginRoute.name,
+        (route) => false,
+      );
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Gagal Logout')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,29 +188,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/login");
-                  },
+                  onPressed: _handleLogout,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: colorScheme.error.withOpacity(0.1),
                     shadowColor: Colors.transparent,
                     side: BorderSide(color: colorScheme.error, width: 0.8),
                     iconColor: colorScheme.error,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.logout_rounded),
-                      SizedBox(width: 8),
-                      Text(
-                        'Log out',
-                        style: textTheme.titleMedium?.copyWith(
-                          color: colorScheme.error,
-                          fontWeight: FontWeight.bold,
+                  child: isLoading
+                      ? SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 3,
+                            color: colorScheme.error,
+                          ),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.logout_rounded),
+                            SizedBox(width: 8),
+                            Text(
+                              'Log out',
+                              style: textTheme.titleMedium?.copyWith(
+                                color: colorScheme.error,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
 
