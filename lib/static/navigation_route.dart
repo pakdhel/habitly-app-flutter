@@ -6,7 +6,8 @@ enum NavigationRoute {
   registerRoute("/register"),
   statsRoute("/stats"),
   detailRoute("/detail"),
-  newHabitRoute("/new");
+  newHabitRoute("/new"),
+  splashRoute("/splash");
 
 
   const NavigationRoute(this.name);

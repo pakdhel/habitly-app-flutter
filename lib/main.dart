@@ -3,6 +3,7 @@ import 'package:habitly/screen/login/login_screen.dart';
 import 'package:habitly/screen/main/main_screen.dart';
 import 'package:habitly/screen/new_habit/new_habit_screen.dart';
 import 'package:habitly/screen/onboarding/onboarding_screen.dart';
+import 'package:habitly/splash_screen.dart';
 import 'package:habitly/static/navigation_route.dart';
 import 'package:habitly/style/theme/habitly_theme.dart';
 
@@ -18,8 +19,9 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       theme: HabitlyTheme.lightTheme,
       // darkTheme: HabitlyTheme.darkTheme,
-      initialRoute: NavigationRoute.onBoarding.name,
+      initialRoute: NavigationRoute.splashRoute.name,
       routes: {
+        NavigationRoute.splashRoute.name: (ctx) => SplashScreen(),
         NavigationRoute.onBoarding.name: (ctx) => OnboardingScreen(),
         NavigationRoute.loginRoute.name: (ctx) => LoginScreen(),
         NavigationRoute.mainRoute.name: (ctx) => MainScreen(),
