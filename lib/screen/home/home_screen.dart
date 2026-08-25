@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:habitly/data/providers/user_provider.dart';
 import 'package:habitly/screen/home/habit_card_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
@@ -20,20 +23,25 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Saturday, August 22'),
-                      Text('Hi, Maya 👋', style: textTheme.headlineLarge),
+                      Text(
+                        'Hi, ${user?.firstName} 👋',
+                        style: textTheme.headlineLarge,
+                      ),
                     ],
                   ),
                 ),
 
                 Container(
-                  padding: EdgeInsets.all(16),
+                  width: 52,
+                  height: 52,
+                  alignment: Alignment.center,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: colorScheme.primaryContainer,
                   ),
                   child: Text(
-                    'MH',
-                    style: textTheme.labelLarge?.copyWith(
+                    user == null ? '' : '${user.firstName[0]}${user.lastName[0]}',
+                    style: textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),

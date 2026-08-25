@@ -73,13 +73,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   child: Row(
                     children: [
                       Container(
-                        padding: EdgeInsets.all(12),
+                        width: 64,
+                        height: 64,
+                        alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: colorScheme.primaryContainer,
                           shape: BoxShape.circle,
                         ),
                         child: Text(
-                          'MH',
+                          user == null
+                              ? ''
+                              : '${user.firstName[0]}${user.lastName[0]}',
                           style: textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: colorScheme.onPrimaryContainer,
@@ -89,23 +93,26 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
                       SizedBox(width: 16),
 
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            user?.firstName ?? 'Guest',
-                            style: textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              user?.firstName ?? 'Guest',
+                              style: textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
 
-                          Text(
-                            user?.email ?? '-',
-                            style: textTheme.titleSmall?.copyWith(
-                              color: colorScheme.tertiary,
+                            Text(
+                              user?.email ?? '-',
+                              overflow: TextOverflow.ellipsis,
+                              style: textTheme.titleSmall?.copyWith(
+                                color: colorScheme.tertiary,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
