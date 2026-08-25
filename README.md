@@ -84,7 +84,7 @@ lib/
 - [x] Perbaikan konsistensi warna & state lokal antar komponen
 
 **Logic & Arsitektur**
-- [ ] Autentikasi manual dengan JWT (access + refresh token)
+- [x] Autentikasi manual dengan JWT (access + refresh token)
 - [ ] Integrasi Riverpod untuk state management
 - [ ] Integrasi REST API untuk data habit
 - [ ] Unit test & widget test
