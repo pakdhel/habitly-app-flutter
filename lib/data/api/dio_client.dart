@@ -8,6 +8,12 @@ class DioClient {
 
   DioClient({required this.tokenStorage}) {
     dio = Dio(BaseOptions(baseUrl: 'https://dummyjson.com'));
-    dio.interceptors.add(AuthInterceptor(tokenStorage: tokenStorage));
+
+    final authInterceptor = AuthInterceptor(
+      tokenStorage: tokenStorage,
+      dio: dio,
+    );
+
+    dio.interceptors.add(authInterceptor);
   }
 }
