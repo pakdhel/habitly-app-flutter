@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:habitly/data/providers/habits_provider.dart';
 import 'package:habitly/data/providers/user_provider.dart';
 import 'package:habitly/screen/home/habit_card_widget.dart';
 
@@ -11,6 +12,7 @@ class HomeScreen extends ConsumerWidget {
     final user = ref.watch(userProvider);
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+    final habitsAsync = ref.watch(habitsProvider);
     return Scaffold(
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
@@ -40,7 +42,9 @@ class HomeScreen extends ConsumerWidget {
                     color: colorScheme.primaryContainer,
                   ),
                   child: Text(
-                    user == null ? '' : '${user.firstName[0]}${user.lastName[0]}',
+                    user == null
+                        ? ''
+                        : '${user.firstName[0]}${user.lastName[0]}',
                     style: textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -110,11 +114,15 @@ class HomeScreen extends ConsumerWidget {
 
             SizedBox(height: 6),
 
-            HabitCardWidget(),
-            SizedBox(height: 6),
-            HabitCardWidget(),
-            SizedBox(height: 6),
-            HabitCardWidget(),
+            habitsAsync.when(
+              data: (habits) => Column(
+                children: habits
+                    .map((habit) => HabitCardWidget(name: habit.name))
+                    .toList(),
+              ),
+              error: (err, stack) => Text('Gagal membuat: $err'),
+              loading: () => CircularProgressIndicator(),
+            ),
           ],
         ),
       ),
