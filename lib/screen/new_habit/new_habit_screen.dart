@@ -1,21 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:habitly/data/providers/habits_provider.dart';
+import 'package:habitly/data/providers/providers.dart';
+import 'package:habitly/data/providers/user_provider.dart';
 import 'package:habitly/screen/new_habit/color_tag_widget.dart';
 import 'package:habitly/screen/new_habit/frequency_widget.dart';
 import 'package:habitly/screen/new_habit/icon_select.dart';
 import 'package:habitly/screen/new_habit/reminder_time_widget.dart';
+import 'package:habitly/style/colors/habitly_colors.dart';
 
-class NewHabitScreen extends StatefulWidget {
+class NewHabitScreen extends ConsumerStatefulWidget {
   const NewHabitScreen({super.key});
 
   @override
-  State<NewHabitScreen> createState() => _NewHabitScreenState();
+  ConsumerState<NewHabitScreen> createState() => _NewHabitScreenState();
 }
 
-class _NewHabitScreenState extends State<NewHabitScreen> {
+class _NewHabitScreenState extends ConsumerState<NewHabitScreen> {
   IconData? selectedIcon;
   String selectedFrequency = 'Daily';
   Color? colorTag;
   TimeOfDay? reminderTime;
+
+  TextEditingController habitNameController = TextEditingController();
+
+  void _handleSaveHabit() async {
+    if (habitNameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Habit name cannot be empty'),
+          backgroundColor: HabitlyColors.destructive.color,
+        ),
+      );
+    } else {
+      final user = ref.read(userProvider);
+      if (user == null) return;
+      final newHabit = await ref
+          .read(habitServicesProvider)
+          .addHabit(habitNameController.text, user.id);
+      ref.read(habitsProvider.notifier).addHabitLocally(newHabit);
+
+      if (!mounted) return;
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +94,7 @@ class _NewHabitScreenState extends State<NewHabitScreen> {
                     ),
                     SizedBox(height: 6),
                     TextField(
+                      controller: habitNameController,
                       decoration: InputDecoration(
                         hintText: 'e.g. Meditate for 10 minutes',
                         contentPadding: EdgeInsets.symmetric(horizontal: 16),
@@ -152,7 +181,7 @@ class _NewHabitScreenState extends State<NewHabitScreen> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: _handleSaveHabit,
                         child: Text(
                           'Save habit',
                           style: textTheme.titleMedium?.copyWith(

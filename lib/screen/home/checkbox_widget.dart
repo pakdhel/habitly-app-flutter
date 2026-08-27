@@ -28,9 +28,11 @@ class _CheckboxWidgetState extends ConsumerState<CheckboxWidget> {
 
     return GestureDetector(
       onTap: () async {
-        await ref
-            .read(habitServicesProvider)
-            .updateHabit(!isChecked, widget.habit.id);
+        try {
+          await ref
+              .read(habitServicesProvider)
+              .updateHabit(!isChecked, widget.habit.id);
+        } catch (e) {}
 
         ref
             .read(habitsProvider.notifier)

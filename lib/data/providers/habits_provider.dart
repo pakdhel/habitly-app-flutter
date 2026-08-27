@@ -17,7 +17,7 @@ class HabitsNotifier extends AsyncNotifier<List<Habit>> {
   void toggleHabitLocally(int id, bool completed) async {
     final currentHabits = state.value;
     if (currentHabits == null) return;
-    
+
     final updatedHabits = currentHabits
         .map(
           (habit) =>
@@ -26,6 +26,14 @@ class HabitsNotifier extends AsyncNotifier<List<Habit>> {
         .toList();
 
     state = AsyncValue.data(updatedHabits);
+  }
+
+  void addHabitLocally(Habit habit) {
+    final currentList = state.value;
+    if (currentList == null) return;
+
+    final updatedList = [...currentList, habit];
+    state = AsyncValue.data(updatedList);
   }
 }
 
