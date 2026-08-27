@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:habitly/data/models/habit.dart';
 import 'package:habitly/screen/home/checkbox_widget.dart';
 
 class HabitCardWidget extends StatelessWidget {
-  final String name;
-  const HabitCardWidget({super.key, required this.name});
+  final Habit habit;
+  const HabitCardWidget({super.key, required this.habit});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class HabitCardWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            name,
+                            habit.name,
                             style: textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -84,7 +85,7 @@ class HabitCardWidget extends StatelessWidget {
                 ),
               ),
 
-              CheckboxWidget(),
+              CheckboxWidget(habit: habit,),
             ],
           ),
         ),

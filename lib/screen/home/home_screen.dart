@@ -117,7 +117,7 @@ class HomeScreen extends ConsumerWidget {
             habitsAsync.when(
               data: (habits) => Column(
                 children: habits
-                    .map((habit) => HabitCardWidget(name: habit.name))
+                    .map((habit) => HabitCardWidget(habit: habit))
                     .toList(),
               ),
               error: (err, stack) => Text('Gagal membuat: $err'),

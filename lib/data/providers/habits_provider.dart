@@ -13,6 +13,20 @@ class HabitsNotifier extends AsyncNotifier<List<Habit>> {
     final habits = await habitServices.getHabitByUserId(user.id);
     return habits;
   }
+
+  void toggleHabitLocally(int id, bool completed) async {
+    final currentHabits = state.value;
+    if (currentHabits == null) return;
+    
+    final updatedHabits = currentHabits
+        .map(
+          (habit) =>
+              habit.id == id ? habit.copyWith(completed: completed) : habit,
+        )
+        .toList();
+
+    state = AsyncValue.data(updatedHabits);
+  }
 }
 
 final habitsProvider = AsyncNotifierProvider<HabitsNotifier, List<Habit>>(() {

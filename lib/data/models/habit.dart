@@ -23,4 +23,13 @@ class Habit {
   Map<String, dynamic> toJson() {
     return {'id': id, 'todo': name, 'completed': completed, 'userId': userId};
   }
+
+  Habit copyWith({bool? completed}) {
+    return Habit(
+      id: id,
+      name: name,
+      completed: completed ?? this.completed,
+      userId: userId,
+    );
+  }
 }
