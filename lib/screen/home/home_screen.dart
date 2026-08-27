@@ -13,6 +13,7 @@ class HomeScreen extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     final habitsAsync = ref.watch(habitsProvider);
+
     return Scaffold(
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
@@ -55,73 +56,78 @@ class HomeScreen extends ConsumerWidget {
 
             SizedBox(height: 20),
 
-            SizedBox(
-              width: double.infinity,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadiusGeometry.circular(36),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 24,
-                    horizontal: 20,
+            habitsAsync.when(
+              error: (err, stack) => Text('Error $err'),
+              loading: () => CircularProgressIndicator(),
+              data: (habits) => Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusGeometry.circular(36),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 24,
+                          horizontal: 20,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'You\'re doing great, keep it gentle',
+                              style: textTheme.bodySmall?.copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(height: 4),
+
+                            Text(
+                              '${habits.where((habit) => habit.completed).length} of ${habits.length}',
+                              style: textTheme.headlineMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+
+                            SizedBox(height: 16),
+                            Container(
+                              height: 10,
+                              decoration: BoxDecoration(
+                                color: colorScheme.inversePrimary,
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                  SizedBox(height: 20),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'You\'re doing great, keep it gentle',
-                        style: textTheme.bodySmall?.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        '2 of 5 habits',
-                        style: textTheme.headlineMedium?.copyWith(
+                        'Today\'s habits',
+                        style: textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: 16),
-                      Container(
-                        height: 10,
-                        decoration: BoxDecoration(
-                          color: colorScheme.inversePrimary,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
+                      Text(
+                        '${habits.length} Total',
+                        style: textTheme.bodySmall,
                       ),
                     ],
                   ),
-                ),
+
+                  SizedBox(height: 6),
+
+                  ...habits.map((habit) => HabitCardWidget(habit: habit)),
+                ],
               ),
-            ),
-
-            SizedBox(height: 20),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Today\'s habits',
-                  style: textTheme.labelLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text('5 Total', style: textTheme.bodySmall),
-              ],
-            ),
-
-            SizedBox(height: 6),
-
-            habitsAsync.when(
-              data: (habits) => Column(
-                children: habits
-                    .map((habit) => HabitCardWidget(habit: habit))
-                    .toList(),
-              ),
-              error: (err, stack) => Text('Gagal membuat: $err'),
-              loading: () => CircularProgressIndicator(),
             ),
           ],
         ),
