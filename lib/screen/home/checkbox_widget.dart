@@ -46,14 +46,15 @@ class _CheckboxWidgetState extends ConsumerState<CheckboxWidget> {
         // padding: EdgeInsets.all(4),
         width: 36,
         height: 36,
-        decoration: BoxDecoration(
-          color: isChecked ? colorScheme.primary : Colors.transparent,
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: isChecked ? colorScheme.primary : Colors.black26,
-            width: 3,
-          ),
-        ),
+        decoration: isChecked
+            ? BoxDecoration(
+                color: colorScheme.primary.withAlpha(180),
+                shape: BoxShape.circle,
+              )
+            : BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.black26, width: 2),
+              ),
         child: isChecked ? Icon(Icons.check, color: Colors.white) : null,
       ),
     );

@@ -9,7 +9,7 @@ class ColorHexConverter {
   }
 
   static Color hexToColor(String hex) {
-    final hexCode = hex.replaceAll('#', ''); // buang tanda '#'
+    final hexCode = hex.replaceAll('#', '');
     return Color(
       int.parse('FF$hexCode', radix: 16),
     ); // FF di depan = alpha 100%

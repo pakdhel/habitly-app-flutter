@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:habitly/data/models/habit.dart';
 import 'package:habitly/screen/home/checkbox_widget.dart';
 import 'package:habitly/static/color_hex_converter.dart';
+import 'package:habitly/static/color_utils.dart';
 import 'package:habitly/static/habit_icons.dart';
 
 class HabitCardWidget extends StatelessWidget {
@@ -12,10 +13,24 @@ class HabitCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+
+    final baseColor = habit.colorTag != null
+        ? ColorHexConverter.hexToColor(habit.colorTag!)
+        : Colors.greenAccent;
+
+    final displayColor = habit.completed ? baseColor.withAlpha(100) : baseColor;
+    final iconColor = ColorUtils.darken(baseColor);
+    final displayIconColor = habit.completed
+        ? iconColor.withAlpha(100)
+        : iconColor;
+
     return SizedBox(
       width: double.infinity,
       child: Card(
-        color: colorScheme.surface,
+        elevation: 0,
+        color: habit.completed
+            ? colorScheme.surface.withAlpha(100)
+            : colorScheme.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(36),
         ),
@@ -31,14 +46,13 @@ class HabitCardWidget extends StatelessWidget {
                       width: 48,
                       height: 48,
                       decoration: BoxDecoration(
-                        color: habit.colorTag != null
-                            ? ColorHexConverter.hexToColor(habit.colorTag!)
-                            : Colors.greenAccent,
+                        color: displayColor,
                         borderRadius: BorderRadius.circular(100),
                       ),
                       child: Icon(
                         HabitIcons.icons[habit.icon] ??
                             HabitIcons.icons['eco_outlined'],
+                        color: displayIconColor,
                       ),
                     ),
 
@@ -50,9 +64,16 @@ class HabitCardWidget extends StatelessWidget {
                         children: [
                           Text(
                             habit.name,
-                            style: textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: habit.completed
+                                ? textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black45,
+                                    decoration: TextDecoration.lineThrough,
+                                    decorationColor: Colors.black26,
+                                  )
+                                : textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                           ),
 
                           SizedBox(height: 4),
