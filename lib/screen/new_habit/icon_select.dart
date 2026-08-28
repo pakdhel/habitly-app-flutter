@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:habitly/static/habit_icons.dart';
 
 class IconSelect extends StatefulWidget {
-  final ValueChanged<IconData> onIconSelected;
+  final ValueChanged<String> onIconSelected;
   const IconSelect({super.key, required this.onIconSelected});
 
   @override
@@ -9,16 +10,8 @@ class IconSelect extends StatefulWidget {
 }
 
 class _IconSelectState extends State<IconSelect> {
-  final List<IconData> icons = [
-    Icons.eco_outlined,
-    Icons.water_drop_outlined,
-    Icons.fitness_center_outlined,
-    Icons.menu_book,
-    Icons.directions_walk_rounded,
-    // Icon(Icons.,)
-  ];
-
-  int indexSelected = -1;
+    
+  String? selectedIconName;
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +19,19 @@ class _IconSelectState extends State<IconSelect> {
     return Wrap(
       spacing: 12,
       runSpacing: 12,
-      children: List.generate(icons.length, (index) {
-        final isSelected = indexSelected == index;
+      children: HabitIcons.icons.entries.map((entry) {
+        final name = entry.key;
+        final iconData = entry.value;
+
+        final isSelected = selectedIconName == name;
+
         return GestureDetector(
           onTap: () {
-            setState(() { 
-              indexSelected = index;
+            setState(() {
+              selectedIconName = name;
             });
 
-            widget.onIconSelected(icons[index]);
-
-            print(indexSelected);
+            widget.onIconSelected(name);
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -50,14 +45,14 @@ class _IconSelectState extends State<IconSelect> {
                   : Border.all(color: colorScheme.outline),
             ),
             child: Icon(
-              icons[index],
+              iconData,
               color: isSelected
                   ? colorScheme.onPrimaryContainer
                   : colorScheme.tertiary,
             ),
           ),
         );
-      }),
+      }).toList(),
     );
   }
 }

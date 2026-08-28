@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:habitly/data/models/habit.dart';
 import 'package:habitly/screen/home/checkbox_widget.dart';
+import 'package:habitly/static/color_hex_converter.dart';
+import 'package:habitly/static/habit_icons.dart';
 
 class HabitCardWidget extends StatelessWidget {
   final Habit habit;
@@ -29,10 +31,15 @@ class HabitCardWidget extends StatelessWidget {
                       width: 48,
                       height: 48,
                       decoration: BoxDecoration(
-                        color: Colors.greenAccent,
+                        color: habit.colorTag != null
+                            ? ColorHexConverter.hexToColor(habit.colorTag!)
+                            : Colors.greenAccent,
                         borderRadius: BorderRadius.circular(100),
                       ),
-                      child: Icon(Icons.menu_book_rounded),
+                      child: Icon(
+                        HabitIcons.icons[habit.icon] ??
+                            HabitIcons.icons['eco_outlined'],
+                      ),
                     ),
 
                     SizedBox(width: 14),
@@ -71,7 +78,7 @@ class HabitCardWidget extends StatelessWidget {
                               ),
                               SizedBox(width: 6),
                               Text(
-                                'Daily',
+                                habit.frequency ?? 'Daily',
                                 style: textTheme.bodyMedium?.copyWith(
                                   color: colorScheme.tertiary,
                                 ),
@@ -85,7 +92,7 @@ class HabitCardWidget extends StatelessWidget {
                 ),
               ),
 
-              CheckboxWidget(habit: habit,),
+              CheckboxWidget(habit: habit),
             ],
           ),
         ),

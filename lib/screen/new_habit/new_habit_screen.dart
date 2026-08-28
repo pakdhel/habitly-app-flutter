@@ -7,6 +7,7 @@ import 'package:habitly/screen/new_habit/color_tag_widget.dart';
 import 'package:habitly/screen/new_habit/frequency_widget.dart';
 import 'package:habitly/screen/new_habit/icon_select.dart';
 import 'package:habitly/screen/new_habit/reminder_time_widget.dart';
+import 'package:habitly/static/color_hex_converter.dart';
 import 'package:habitly/style/colors/habitly_colors.dart';
 
 class NewHabitScreen extends ConsumerStatefulWidget {
@@ -17,10 +18,11 @@ class NewHabitScreen extends ConsumerStatefulWidget {
 }
 
 class _NewHabitScreenState extends ConsumerState<NewHabitScreen> {
-  IconData? selectedIcon;
+  // IconData? selectedIcon;
   String selectedFrequency = 'Daily';
   Color? colorTag;
   TimeOfDay? reminderTime;
+  String? selectedIconName;
 
   TextEditingController habitNameController = TextEditingController();
 
@@ -38,7 +40,15 @@ class _NewHabitScreenState extends ConsumerState<NewHabitScreen> {
       final newHabit = await ref
           .read(habitServicesProvider)
           .addHabit(habitNameController.text, user.id);
-      ref.read(habitsProvider.notifier).addHabitLocally(newHabit);
+
+      final habitLocal = newHabit.copyWith(
+        icon: selectedIconName,
+        frequency: selectedFrequency,
+        colorTag: colorTag != null
+            ? ColorHexConverter.colorToHex(colorTag!)
+            : null,
+      );
+      ref.read(habitsProvider.notifier).addHabitLocally(habitLocal);
 
       if (!mounted) return;
       Navigator.pop(context);
@@ -115,7 +125,7 @@ class _NewHabitScreenState extends ConsumerState<NewHabitScreen> {
                     IconSelect(
                       onIconSelected: (icon) {
                         setState(() {
-                          selectedIcon = icon;
+                          selectedIconName = icon;
                         });
                       },
                     ),
